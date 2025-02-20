@@ -48,10 +48,10 @@ class LinearRegressor:
         if method == "least_squares":
             self.fit_multiple(X_with_bias, y)
         elif method == "gradient_descent":
-            hist = self.fit_gradient_descent(
+            hist, hist_mse = self.fit_gradient_descent(
                 X_with_bias, y, learning_rate, iterations, return_history=return_history)
             if return_history:
-                return hist
+                return hist, hist_mse
 
     def fit_multiple(self, X, y):
         """
@@ -95,6 +95,7 @@ class LinearRegressor:
         """
         if return_history:
             coef_hist = []
+            mse_hist = []
         # Initialize the parameters to very small values (close to 0)
         m = len(y)
         self.coefficients = (
@@ -119,8 +120,10 @@ class LinearRegressor:
             if epoch % 1000 == 0:
                 mse = np.sum(error ** 2)/m
                 print(f"Epoch {epoch}: MSE = {mse}")
+            if return_history:
+                mse_hist.append(np.sum(error ** 2)/m)
         if return_history:
-            return coef_hist
+            return coef_hist, mse_hist
 
     def predict(self, X):
         """
