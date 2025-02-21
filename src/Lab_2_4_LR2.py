@@ -117,7 +117,7 @@ class LinearRegressor:
                 coef_hist.append([self.intercept]+list(self.coefficients))
 
             # TODO: Calculate and print the loss every 10 epochs
-            if epoch % 1000 == 0:
+            if epoch % 100000 == 0:
                 mse = np.sum(error ** 2)/m
                 print(f"Epoch {epoch}: MSE = {mse}")
             if return_history:
